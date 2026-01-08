@@ -8,7 +8,7 @@ use App\Models\ProductMultimedia;
 use Inertia\Inertia;
 use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Http\Request;
-
+ 
 class AdminCategoryProductsController extends Controller
 {
     // Mostrar productos de una categoría
@@ -18,7 +18,7 @@ class AdminCategoryProductsController extends Controller
 
         $products = Product::where('category_id', $categoryId)
             ->with(['multimedia', 'variants.values.attribute'])
-            ->select('id', 'name', 'description', 'price', 'available')
+            ->select('id', 'name', 'description','longDescription','motor','potencia','transmision','peso', 'available')
             ->paginate(6)
             ->onEachSide(1);
 
