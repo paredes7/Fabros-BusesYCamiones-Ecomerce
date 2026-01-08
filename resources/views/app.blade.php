@@ -9,7 +9,7 @@
     <title inertia>{{ config('app.name', 'Maro Uniformes') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="https://res.cloudinary.com/dnbklbswg/image/upload/v1767750866/pragatilogo_cw8xso.jpg" type="image/jpeg">
+    <link rel="icon" href="https://res.cloudinary.com/dnbklbswg/image/upload/v1767853320/favicon-512x512_2_qo3drn.png" type="image/jpeg">
 
     <!-- Fuente principal -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
     <!-- Meta Open Graph para redes sociales -->
     <meta property="og:title" content="Maro Uniformes" />
     <meta property="og:description" content="Uniformes de calidad en Concepción, Chile" />
-    <meta property="og:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1767750866/pragatilogo_cw8xso.jpg" />
+    <meta property="og:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1767853320/favicon-512x512_2_qo3drn.png" />
     <meta property="og:url" content="{{ url('/') }}" />
     <meta property="og:type" content="website" />
 
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Maro Uniformes" />
     <meta name="twitter:description" content="Ofrecemos uniformes de calidad en Concepción, Chile" />
-    <meta name="twitter:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1767750866/pragatilogo_cw8xso.jpg" />
+    <meta name="twitter:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1767853320/favicon-512x512_2_qo3drn.png" />
 
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.bunny.net">
