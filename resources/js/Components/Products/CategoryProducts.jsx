@@ -5,6 +5,18 @@ export default function CategoryProducts({ category }) {
     const [hoveredCard, setHoveredCard] = useState(null);
     if (!category) return null;
 
+    // Helper para generar slug consistente
+    const generateSlug = (name) => {
+        return name
+            .toLowerCase()
+            .replace(/\./g, '-')      // Reemplazar puntos por guiones
+            .replace(/\s+/g, '-')     // Reemplazar espacios por guiones
+            .replace(/[^\w\-]+/g, '') // Eliminar caracteres especiales
+            .replace(/\-\-+/g, '-')   // Reemplazar múltiples guiones por uno solo
+            .replace(/^-+/, '')       // Eliminar guiones al inicio
+            .replace(/-+$/, '');      // Eliminar guiones al final
+    };
+
     const renderProductsGrid = (products) => (
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
             {products.map((p) => (
@@ -66,7 +78,7 @@ export default function CategoryProducts({ category }) {
 
 
                         <Link
-                            href={`/products/${p.name.toLowerCase().replace(/\s+/g, '-')}/${p.id}`}
+                            href={`/products/${generateSlug(p.name)}/${p.id}`}
                             className="mt-5 inline-block w-full py-3 bg-black text-white font-semibold
                             rounded-xl shadow-md hover:bg-gray-800 transition-colors"
                         >
