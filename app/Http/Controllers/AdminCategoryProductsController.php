@@ -35,16 +35,24 @@ class AdminCategoryProductsController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
+            'longDescription' => 'nullable|string',
+            'motor' => 'nullable|string|max:100',
+            'potencia' => 'nullable|string|max:50',
+            'transmision' => 'nullable|string|max:50',
+            'peso' => 'nullable|string|max:256',
             'files' => 'nullable|array|max:10',
-            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,mp4,mov,avi',
+            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi',
         ]);
 
         $product = Product::create([
             'category_id' => $request->category_id,
             'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
+            'longDescription' => $request->longDescription,
+            'motor' => $request->motor,
+            'potencia' => $request->potencia,
+            'transmision' => $request->transmision,
+            'peso' => $request->peso,
             'available' => 1,
         ]);
 
@@ -62,15 +70,19 @@ class AdminCategoryProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
+            'longDescription' => 'nullable|string',
+            'motor' => 'nullable|string|max:100',
+            'potencia' => 'nullable|string|max:50',
+            'transmision' => 'nullable|string|max:50',
+            'peso' => 'nullable|string|max:256',
             'files' => 'nullable|array|max:10',
-            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,mp4,mov,avi',
+            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi',
             'removed_media_ids' => 'nullable|array',
             'removed_media_ids.*' => 'exists:product_multimedia,id',
         ]);
 
         // Actualizar datos del producto
-        $product->update($request->only('name', 'description', 'price'));
+        $product->update($request->only('name', 'description', 'longDescription', 'motor', 'potencia', 'transmision', 'peso'));
 
         // Eliminar multimedia removida
         if ($request->filled('removed_media_ids')) {
@@ -123,10 +135,13 @@ class AdminCategoryProductsController extends Controller
                 'resource_type' => $resourceType
             ]);
 
+            // Las imágenes subidas desde el formulario de producto son tipo "General" (multimedia_type_id = 1)
             ProductMultimedia::create([
                 'product_id' => $product->id,
                 'url' => $upload['secure_url'],
                 'type' => $resourceType,
+                'multimedia_type_id' => 1, // General
+                'sort_order' => 0,
             ]);
         }
     }

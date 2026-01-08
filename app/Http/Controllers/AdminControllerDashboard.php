@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Cloudinary\Api\Upload\UploadApi;
 
 class AdminControllerDashboard extends Controller
 {
@@ -44,13 +45,27 @@ class AdminControllerDashboard extends Controller
             'name'        => 'required|string|max:255|unique:categories,name',
             'description' => 'nullable|string|max:500',
             'parent_id'   => 'nullable|exists:categories,id', // permite subcategorías
+            'image'       => 'nullable|image|max:10240|mimes:jpeg,jpg,png,gif,webp',
         ]);
+
+        $imageUrl = null;
+
+        // Subir imagen a Cloudinary si existe
+        if ($request->hasFile('image')) {
+            $uploadApi = new UploadApi();
+            $upload = $uploadApi->upload($request->file('image')->getRealPath(), [
+                'folder' => 'categories',
+                'resource_type' => 'image'
+            ]);
+            $imageUrl = $upload['secure_url'];
+        }
 
         $category = Category::create([
             'name'        => $request->name,
             'slug'        => Str::slug($request->name),
             'description' => $request->description,
-            'parent_id'   => $request->parent_id, 
+            'parent_id'   => $request->parent_id,
+            'image'       => $imageUrl,
         ]);
 
         return response()->json([
@@ -68,6 +83,7 @@ class AdminControllerDashboard extends Controller
             'name'        => 'required|string|max:255|unique:categories,name,' . $category->id,
             'description' => 'nullable|string|max:500',
             'parent_id'   => 'nullable|exists:categories,id',
+            'image'       => 'nullable|image|max:10240|mimes:jpeg,jpg,png,gif,webp',
         ]);
 
         // Evitar que una categoría se haga hija de sí misma
@@ -78,11 +94,24 @@ class AdminControllerDashboard extends Controller
             ], 422);
         }
 
+        $imageUrl = $category->image;
+
+        // Subir nueva imagen a Cloudinary si existe
+        if ($request->hasFile('image')) {
+            $uploadApi = new UploadApi();
+            $upload = $uploadApi->upload($request->file('image')->getRealPath(), [
+                'folder' => 'categories',
+                'resource_type' => 'image'
+            ]);
+            $imageUrl = $upload['secure_url'];
+        }
+
         $category->update([
             'name'        => $request->name,
             'slug'        => Str::slug($request->name),
             'description' => $request->description,
             'parent_id'   => $request->parent_id,
+            'image'       => $imageUrl,
         ]);
 
         return response()->json([
