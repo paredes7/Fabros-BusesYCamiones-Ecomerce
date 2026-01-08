@@ -34,27 +34,7 @@ export default function VehicleShowcase({ product }) {
     selectedVariant?.values[0]?.attribute || "Variante";
   const selectedValue = selectedVariant?.values[0]?.value || "";
 
-  const handleAddToCart = async () => {
-    if (!selectedVariant || isOutOfStock) return;
 
-    setAdding(true);
-
-    await addToCart({
-      id: product.id,
-      nombre: product.name,
-      precio: selectedVariant.price,
-      cantidad: quantity,
-      image: mainImage,
-      sku: selectedVariant.sku,
-      stock: selectedVariant.stock,
-      variant: `${selectedAttribute}: ${selectedValue}`,
-    });
-
-    setAdding(false);
-    setSuccess(true);
-
-    setTimeout(() => setSuccess(false), 1500);
-  };
 
   // Especificaciones del producto (vienen de la BD)
   const specifications = {

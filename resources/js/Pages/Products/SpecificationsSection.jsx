@@ -5,7 +5,7 @@ export default function SpecificationsSection({
 }) {
   // Filtrar multimedia por tipo según multimedia_type_id
   // 1 = General, 2 = Galeria, 3 = Interior, 4 = Exterior, 5 = Performance, 6 = Seguridad
-
+  console.log("Multimedia recibida en SpecificationsSection:", multimedia);
   const interiorImages = multimedia.filter((m) => m.multimedia_type_id === 3 && m.type !== "video");
   const exteriorImages = multimedia.filter((m) => m.multimedia_type_id === 4 && m.type !== "video");
   const performanceImages = multimedia.filter((m) => m.multimedia_type_id === 5 && m.type !== "video");
@@ -26,25 +26,56 @@ export default function SpecificationsSection({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {interiorImages.map((img, idx) => (
                 <div
-                  key={idx}
-                  className="relative aspect-video rounded-2xl overflow-hidden shadow-xl group cursor-pointer border-2 border-gray-200 hover:border-turquoise transition-all duration-500 hover:shadow-2xl"
+                  key={img.id ?? idx}
+                  className="group rounded-2xl overflow-hidden shadow-xl border-2 border-gray-200 hover:border-turquoise transition-all duration-500 hover:shadow-2xl bg-white"
                 >
-                  <img
-                    src={img.url}
-                    alt={`Interior ${idx + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    Vista {idx + 1}
+
+                  <div className="relative aspect-video overflow-hidden cursor-pointer">
+                    <img
+                      src={img.url}
+                      alt={img.title || `Interior ${idx + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      Vista {idx + 1}
+                    </div>
                   </div>
+
+                  {(img.title || img.description) && (
+                    <div className="p-4 border-t bg-gray-50">
+                      {img.title && (
+                        <h4 className="text-base font-semibold text-gray-800 mb-1">
+                          {img.title}
+                        </h4>
+                      )}
+
+                      {img.description && (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {img.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-24 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-2 border-dashed border-gray-300">
-              <svg className="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <svg
+                className="w-16 h-16 mx-auto mb-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
               </svg>
               <p className="text-gray-500 text-lg font-medium">
                 No hay imágenes de interior disponibles
@@ -53,6 +84,7 @@ export default function SpecificationsSection({
           )}
         </div>
       )}
+
 
       {/* EXTERIOR */}
       {activeTab === "exterior" && (
@@ -78,6 +110,21 @@ export default function SpecificationsSection({
                   <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     Vista {idx + 1}
                   </div>
+                  {(img.title || img.description) && (
+                    <div className="p-4 border-t bg-gray-50">
+                      {img.title && (
+                        <h4 className="text-base font-semibold text-gray-800 mb-1">
+                          {img.title}
+                        </h4>
+                      )}
+
+                      {img.description && (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {img.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -106,18 +153,40 @@ export default function SpecificationsSection({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {performanceImages.map((img, idx) => (
                 <div
-                  key={idx}
-                  className="relative aspect-video rounded-2xl overflow-hidden shadow-xl group cursor-pointer border-2 border-gray-200 hover:border-turquoise transition-all duration-500 hover:shadow-2xl"
+                  key={img.id ?? idx}
+                  className="group rounded-2xl overflow-hidden shadow-xl border-2 border-gray-200 hover:border-turquoise transition-all duration-500 hover:shadow-2xl bg-white"
                 >
-                  <img
-                    src={img.url}
-                    alt={`Performance ${idx + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    Vista {idx + 1}
+
+                  <div className="relative aspect-video overflow-hidden cursor-pointer">
+                    <img
+                      src={img.url}
+                      alt={img.title || `Performance ${idx + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      Vista {idx + 1}
+                    </div>
                   </div>
+
+
+                  {(img.title || img.description) && (
+                    <div className="p-4 border-t bg-gray-50">
+                      {img.title && (
+                        <h4 className="text-base font-semibold text-gray-800 mb-1">
+                          {img.title}
+                        </h4>
+                      )}
+
+                      {img.description && (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {img.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -134,7 +203,7 @@ export default function SpecificationsSection({
         </div>
       )}
 
-      {/* SEGURIDAD */}
+
       {activeTab === "seguridad" && (
         <div>
           <h3 className="text-3xl font-black text-gray-900 mb-3 text-center uppercase tracking-tight">
@@ -146,18 +215,40 @@ export default function SpecificationsSection({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {seguridadImages.map((img, idx) => (
                 <div
-                  key={idx}
-                  className="relative aspect-video rounded-2xl overflow-hidden shadow-xl group cursor-pointer border-2 border-gray-200 hover:border-turquoise transition-all duration-500 hover:shadow-2xl"
+                  key={img.id ?? idx}
+                  className="group rounded-2xl overflow-hidden shadow-xl border-2 border-gray-200 hover:border-turquoise transition-all duration-500 hover:shadow-2xl bg-white"
                 >
-                  <img
-                    src={img.url}
-                    alt={`Seguridad ${idx + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    Vista {idx + 1}
+                  {/* IMAGEN */}
+                  <div className="relative aspect-video overflow-hidden cursor-pointer">
+                    <img
+                      src={img.url}
+                      alt={img.title || `Seguridad ${idx + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="absolute bottom-4 left-4 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      Vista {idx + 1}
+                    </div>
                   </div>
+
+                  {/* CARD TEXTO */}
+                  {(img.title || img.description) && (
+                    <div className="p-4 border-t bg-gray-50">
+                      {img.title && (
+                        <h4 className="text-base font-semibold text-gray-800 mb-1">
+                          {img.title}
+                        </h4>
+                      )}
+
+                      {img.description && (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {img.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

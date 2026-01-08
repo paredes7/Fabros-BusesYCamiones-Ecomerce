@@ -71,6 +71,8 @@ class ProductController extends Controller
                     'multimedia_type_id' => $m->multimedia_type_id,
                     'multimedia_type_name' => $m->multimediaType->name ?? 'General',
                     'sort_order' => $m->sort_order,
+                    'title' => $m->title,
+                    'description' => $m->description,
                 ]),
 
                 // Variantes

@@ -27,9 +27,12 @@ class MultimediaController extends Controller
 
     public function store(Request $request, $id)
 {
+    
     $request->validate([
         'file' => 'required|file|max:51200|mimes:jpeg,jpg,png,webp,mp4,mov,avi',
         'multimedia_type_id' => 'required|exists:multimedia_type,id',
+        'title' => 'nullable|string|max:255',
+        'description' => 'nullable|string',
     ]);
  
     $product = Product::findOrFail($id);
@@ -55,7 +58,9 @@ class MultimediaController extends Controller
         'multimedia_type_id' => $request->multimedia_type_id,
         'url' => $upload['secure_url'],
         'type' => $resourceType,
-        'sort_order' => 0
+        'sort_order' => 0,
+        'title' => $request->title,
+        'description' => $request->description,
     ]);
 
     return response()->json(
@@ -65,33 +70,47 @@ class MultimediaController extends Controller
 
   public function update(Request $request, $id)
 {
+   
+
     $media = ProductMultimedia::findOrFail($id);
 
     $request->validate([
         'multimedia_type_id' => 'required|exists:multimedia_type,id',
-        'file' => 'nullable|file|max:102400|mimes:jpeg,jpg,png,webp,mp4,mov,avi'
+        'file' => 'nullable|file|max:102400|mimes:jpeg,jpg,png,webp,mp4,mov,avi',
+        'title' => 'nullable|string|max:255',
+        'description' => 'nullable|string',
     ]);
 
-    // Reemplazar archivo si llega uno nuevo
     if ($request->hasFile('file')) {
         $file = $request->file('file');
-        $resourceType = str_starts_with($file->getMimeType(), 'video') ? 'video' : 'image';
-        $uploadApi = new \Cloudinary\Api\Upload\UploadApi();
-        $upload = $uploadApi->upload($file->getRealPath(), [
-            'folder' => "products/{$media->product_id}",
-            'resource_type' => $resourceType
-        ]);
+
+        $resourceType = str_starts_with($file->getMimeType(), 'video')
+            ? 'video'
+            : 'image';
+
+        $uploadApi = new UploadApi();
+
+        $upload = $uploadApi->upload(
+            $file->getRealPath(),
+            [
+                'folder' => "products/{$media->product_id}",
+                'resource_type' => $resourceType
+            ]
+        );
 
         $media->url = $upload['secure_url'];
         $media->type = $resourceType;
     }
 
-    // Cambiar tipo
     $media->multimedia_type_id = $request->multimedia_type_id;
+    $media->title = $request->title;
+    $media->description = $request->description;
 
     $media->save();
 
-    return response()->json($media->load('multimediaType'));
+    return response()->json(
+        $media->load('multimediaType')
+    );
 }
 
 

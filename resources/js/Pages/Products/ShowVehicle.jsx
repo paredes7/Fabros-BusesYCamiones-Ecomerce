@@ -10,6 +10,7 @@ import VehicleShowcase from './VehicleShowcase';
  * - Especificaciones técnicas destacadas
  */
 export default function ShowVehicle({ product }) {
+   
  return (
     <Layout title={product.name}>
         <VehicleShowcase product={product}/>
