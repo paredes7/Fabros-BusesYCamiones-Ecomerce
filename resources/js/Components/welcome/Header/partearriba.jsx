@@ -66,7 +66,7 @@ export default function ParteArriba() {
 
          
           <a
-            href="mailto:contactcenter@nibol.com.bo"
+            href="mailto:pragatimotorsBL@gmail.com"
             className="group hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300"
           >
             
@@ -83,7 +83,7 @@ export default function ParteArriba() {
             
             
             <span className="text-sm font-medium tracking-wide">
-              pragati@pragati.com
+             pragatimotorsBL@gmail.com
             </span>
             
             
@@ -99,7 +99,7 @@ export default function ParteArriba() {
 
          
           <a
-            href="mailto:contactcenter@nibol.com.bo"
+            href="mailto:pragatimotorsBL@gmail.com"
             className="md:hidden p-2 text-gray-400 hover:text-white transition-colors duration-300"
             aria-label="Email"
           >

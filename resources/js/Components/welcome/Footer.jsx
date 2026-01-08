@@ -57,7 +57,7 @@ export default function Footer() {
               </div>
 
               <p className="text-gray-300 text-lg leading-relaxed max-w-xl">
-                <span className="font-bold text-white">PRAGBATI</span> el líder en la fabricación de 
+                <span className="font-bold text-white">PRAGATI</span> el líder en la fabricación de 
                 vehículos comerciales y de carga, ahora con el respaldo de{' '}
                 <span className="font-bold text-white">NIBOL Ltda</span> como 
                 representante oficial para brindar asesoramiento y soporte técnico, 
@@ -93,7 +93,7 @@ export default function Footer() {
             
             
             <div className="text-gray-400 text-sm text-center md:text-left">
-              <p>Copyright © <span className="font-bold text-white">Pragbati Bolivia</span> {new Date().getFullYear()} – Todos los derechos reservados</p>
+              <p>Copyright © <span className="font-bold text-white">Pragati Bolivia</span> {new Date().getFullYear()} – Todos los derechos reservados</p>
               <p className="mt-1 text-xs">
                 <a href="#" className="hover:text-white transition-colors">Política de privacidad</a>
                 {' • '}
