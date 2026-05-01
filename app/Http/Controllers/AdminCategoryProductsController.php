@@ -18,7 +18,7 @@ class AdminCategoryProductsController extends Controller
 
         $products = Product::where('category_id', $categoryId)
             ->with(['multimedia', 'variants.values.attribute'])
-            ->select('id', 'name', 'description', 'price', 'available')
+            ->select('id', 'name', 'description', 'available')
             ->paginate(6)
             ->onEachSide(1);
 
@@ -35,20 +35,20 @@ class AdminCategoryProductsController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
             'files' => 'nullable|array|max:10',
             'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,mp4,mov,avi',
+            'documento' => 'nullable|file|max:20480|mimes:pdf,doc,docx,xlsx',
         ]);
 
         $product = Product::create([
             'category_id' => $request->category_id,
             'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
             'available' => 1,
         ]);
 
         $this->handleMultimediaUpload($request, $product);
+        $this->handleDocumentoUpload($request, $product);
 
         return response()->json([
             'status' => 'success',
@@ -62,15 +62,15 @@ class AdminCategoryProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
             'files' => 'nullable|array|max:10',
             'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,mp4,mov,avi',
             'removed_media_ids' => 'nullable|array',
             'removed_media_ids.*' => 'exists:product_multimedia,id',
+            'documento' => 'nullable|file|max:20480|mimes:pdf,doc,docx,xlsx',
         ]);
 
         // Actualizar datos del producto
-        $product->update($request->only('name', 'description', 'price'));
+        $product->update($request->only('name', 'description'));
 
         // Eliminar multimedia removida
         if ($request->filled('removed_media_ids')) {
@@ -79,6 +79,11 @@ class AdminCategoryProductsController extends Controller
 
         // Subir archivos nuevos
         $this->handleMultimediaUpload($request, $product);
+
+        if ($request->boolean('remove_documento')) {
+            $product->multimedia()->where('multimedia_type_id', 7)->delete();
+        }
+        $this->handleDocumentoUpload($request, $product);
 
         return response()->json([
             'status' => 'success',
@@ -111,24 +116,51 @@ class AdminCategoryProductsController extends Controller
     }
 
     private function handleMultimediaUpload(Request $request, Product $product)
-{
-    if ($request->hasFile('files')) {
-        $uploadApi = new UploadApi();
+    {
+        if ($request->hasFile('files')) {
+            $uploadApi = new UploadApi();
 
-        foreach ($request->file('files') as $file) {
-            $resourceType = str_starts_with($file->getMimeType(), 'video') ? 'video' : 'image';
+            foreach ($request->file('files') as $file) {
+                $resourceType = str_starts_with($file->getMimeType(), 'video') ? 'video' : 'image';
 
-            $upload = $uploadApi->upload($file->getRealPath(), [
-                'folder' => "products/{$product->id}",
-                'resource_type' => $resourceType
-            ]);
+                $upload = $uploadApi->upload($file->getRealPath(), [
+                    'folder' => "products/{$product->id}",
+                    'resource_type' => $resourceType
+                ]);
 
-            ProductMultimedia::create([
-                'product_id' => $product->id,
-                'url' => $upload['secure_url'],
-                'type' => $resourceType,
-            ]);
+                ProductMultimedia::create([
+                    'product_id' => $product->id,
+                    'url' => $upload['secure_url'],
+                    'type' => $resourceType,
+                    'multimedia_type_id' => 1,
+                ]);
+            }
         }
     }
-}
+
+    private function handleDocumentoUpload(Request $request, Product $product)
+    {
+        if (!$request->hasFile('documento')) return;
+
+        $uploadApi = new UploadApi();
+        $file = $request->file('documento');
+
+        $upload = $uploadApi->upload($file->getRealPath(), [
+            'folder' => "products/{$product->id}",
+            'resource_type' => 'raw',
+            'use_filename' => true,
+            'unique_filename' => false,
+        ]);
+
+        $product->multimedia()->where('multimedia_type_id', 7)->delete();
+
+        ProductMultimedia::create([
+            'product_id' => $product->id,
+            'url' => $upload['secure_url'],
+            'type' => 'document',
+            'multimedia_type_id' => 7,
+            'sort_order' => 0,
+            'title' => $file->getClientOriginalName(),
+        ]);
+    }
 }

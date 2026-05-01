@@ -61,7 +61,6 @@ class ProductController extends Controller
                 'name' => $product->name,
                 'description' => $product->description,
                 'longDescription' => $product->longDescription,
-                'price' => $product->price,
 
                 // Multimedia organizado por tipo
                 'multimedia' => $product->multimedia->map(fn ($m) => [
@@ -97,7 +96,14 @@ class ProductController extends Controller
                 'caracteristicas' => $product->caracteristicas->map(fn($c) => [
                     'nombre' => $c->nombre,
                     'valor' => $c->valor
-                ])
+                ]),
+
+                'documento' => $product->multimedia->firstWhere('multimedia_type_id', 7)
+                    ? [
+                        'url'   => $product->multimedia->firstWhere('multimedia_type_id', 7)->url,
+                        'title' => $product->multimedia->firstWhere('multimedia_type_id', 7)->title,
+                    ]
+                    : null,
             ]
         ]);
     }

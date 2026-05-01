@@ -5,8 +5,10 @@ import SpecificationsSection from "./SpecificationsSection";
 import ColorSelector from "./ColorSelector";
 import FeatureHighlights from "./FeatureHighlights";
 import TechnicalSpecificationsTable from "./TechnicalSpecificationsTable";
+import DownloadButton from "./DownloadButton";
 
 export default function VehicleShowcase({ product }) {
+  const documento = product.documento || null;
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants?.find((v) => v.stock > 0) || null
   );
@@ -128,21 +130,8 @@ export default function VehicleShowcase({ product }) {
                 </span>
               </a>
 
-              {/* Download Technical Sheet */}
-              {product.technical_sheet_url && (
-                <a
-                  href={product.technical_sheet_url}
-                  download
-                  className="block text-center w-full py-4 px-6 rounded-xl border-2 border-gray-900 text-gray-900 font-bold text-lg hover:bg-gray-900 hover:text-white transition-all duration-300"
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Descargar Ficha Técnica
-                  </span>
-                </a>
-              )}
+              {/* Download Button */}
+              <DownloadButton product={product} documento={documento} />
             </div>
           </div>
         </div>

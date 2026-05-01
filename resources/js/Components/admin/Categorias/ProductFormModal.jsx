@@ -1,15 +1,21 @@
 import { useState } from "react";
 
 export default function ProductFormModal({ categoryId, product, onClose, onSave }) {
+  const existingDocumento = product?.multimedia?.find((m) => m.multimedia_type_id === 7) || null;
+
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",
-    price: product?.price || "",
-    files: [], // archivos nuevos
+    files: [],
   });
 
-  const [existingMedia, setExistingMedia] = useState(product?.multimedia || []);
-  const [previews, setPreviews] = useState([]); // objetos {file, url}
+  const [existingMedia, setExistingMedia] = useState(
+    (product?.multimedia || []).filter((m) => m.multimedia_type_id !== 7)
+  );
+  const [previews, setPreviews] = useState([]);
+  const [documentoFile, setDocumentoFile] = useState(null);
+  const [removeDocumento, setRemoveDocumento] = useState(false);
+  const [currentDocumento, setCurrentDocumento] = useState(existingDocumento);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
@@ -25,9 +31,17 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
       }));
       setFormData((prev) => ({ ...prev, files: [...prev.files, ...newFiles] }));
       setPreviews((prev) => [...prev, ...newPreviews]);
+    } else if (name === "documento") {
+      setDocumentoFile(files[0] || null);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleQuitarDocumento = () => {
+    setRemoveDocumento(true);
+    setCurrentDocumento(null);
+    setDocumentoFile(null);
   };
 
   const handleRemoveExisting = (id) => {
@@ -63,11 +77,15 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
       });
 
       const removedIds = product?.multimedia
-        ?.filter((m) => !existingMedia.find((em) => em.id === m.id))
+        ?.filter((m) => m.multimedia_type_id !== 7)
+        .filter((m) => !existingMedia.find((em) => em.id === m.id))
         .map((m) => m.id);
       if (removedIds?.length) {
         removedIds.forEach((id) => data.append("removed_media_ids[]", id));
       }
+
+      if (documentoFile) data.append("documento", documentoFile);
+      if (removeDocumento) data.append("remove_documento", "1");
 
       let url = "/admin/products";
       let method = "POST";
@@ -218,18 +236,6 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Precio ($)</label>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                  required
-                />
-              </div>
-
-              <div>
                 <label className="block text-gray-700 font-medium mb-1">Agregar Multimedia</label>
                 <input
                   type="file"
@@ -238,6 +244,56 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
                   accept="image/*,video/*"
                   onChange={handleChange}
                 />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Documento del producto</label>
+                <p className="text-xs text-gray-500 mb-2">PDF, Word o Excel · máx. 20 MB</p>
+
+                {currentDocumento && (
+                  <div className="flex items-center gap-2 mb-2 p-2 bg-gray-50 rounded border">
+                    <span className="text-sm text-gray-700 truncate flex-1">
+                      {currentDocumento.title || "Documento actual"}
+                    </span>
+                    <a
+                      href={currentDocumento.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-blue-600 underline shrink-0"
+                    >
+                      Ver
+                    </a>
+                    <button
+                      type="button"
+                      onClick={handleQuitarDocumento}
+                      className="text-xs text-red-500 underline shrink-0"
+                    >
+                      Quitar
+                    </button>
+                  </div>
+                )}
+
+                {documentoFile && (
+                  <div className="flex items-center gap-2 mb-2 p-2 bg-green-50 rounded border border-green-200">
+                    <span className="text-sm text-green-700 truncate flex-1">{documentoFile.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => setDocumentoFile(null)}
+                      className="text-xs text-red-500 underline shrink-0"
+                    >
+                      Quitar
+                    </button>
+                  </div>
+                )}
+
+                {!documentoFile && (
+                  <input
+                    type="file"
+                    name="documento"
+                    accept=".pdf,.doc,.docx,.xlsx"
+                    onChange={handleChange}
+                  />
+                )}
               </div>
             </div>
 
