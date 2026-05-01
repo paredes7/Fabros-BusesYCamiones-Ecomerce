@@ -19,7 +19,7 @@ export default function MethodPay({ method, setMethod }) {
                         value="transfer"
                         checked={method === "transfer"}
                         readOnly
-                        className="w-5 h-5 text-turquoise accent-turquoise"
+                        className="w-5 h-5 text-brandBlue accent-brandBlue"
                     />
                     <span className="text-darkGray font-medium">
                         Transferencia Bancaria
@@ -42,7 +42,7 @@ export default function MethodPay({ method, setMethod }) {
                             <p><span className="font-semibold">Banco:</span> Mercado Pago</p>
                             <p><span className="font-semibold">Tipo de cuenta:</span> Cuenta Vista</p>
                             <p><span className="font-semibold">N° de cuenta:</span> 1017445099</p>
-                            <p><span className="font-semibold">Correo:</span> rojasaedomackarena@gmail.com</p>
+                            <p><span className="font-semibold">Correo:</span> info@fabros.com.bo</p>
                         </div>
 
                         <p className="text-grayCustom text-sm leading-relaxed pt-2">

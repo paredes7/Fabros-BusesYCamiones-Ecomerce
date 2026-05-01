@@ -8,14 +8,14 @@ export default function WelcomeSection() {
             ¡BIENVENIDO A{' '}
             <span className="relative inline-block">
               <span className="relative z-10">
-                PRAGATI MOTORS!
+                FABROS MOTORS!
               </span>
               <span className="absolute bottom-2 left-0 w-full h-3 bg-black/10"></span>
             </span>
           </h2>
           
           <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-medium">
-            PRAGATI es uno de los más grandes fabricantes mundiales de vehículos utilitarios
+            FABROS es uno de los más grandes fabricantes mundiales de vehículos utilitarios
             <span className="text-black font-bold"> Disponible En Bolivia.</span>{' '}
           </p>
         </div>

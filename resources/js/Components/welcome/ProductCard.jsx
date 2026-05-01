@@ -29,8 +29,8 @@ export default function ProductCard({ product }) {
         hover:scale-105
         hover:shadow-2xl
         ${isOutOfStock
-          ? "border-darkTurquoise opacity-80"
-          : "border-gray-200 hover:border-turquoise"}
+          ? "border-brandBlue opacity-80"
+          : "border-gray-200 hover:border-brandBlue"}
       `}
       style={{ fontFamily: "'Playfair Display', serif" }}
     >
@@ -63,7 +63,7 @@ export default function ProductCard({ product }) {
                 transition
                 ${v.stock === 0
                   ? "bg-darkGray text-white border-darkGray"
-                  : "bg-white text-darkGray border-turquoise hover:bg-turquoise hover:text-darkGray"}
+                  : "bg-white text-darkGray border-brandBlue hover:bg-brandBlue hover:text-darkGray"}
               `}
             >
               {v.values[0]?.value}
@@ -72,7 +72,7 @@ export default function ProductCard({ product }) {
         </div>
 
         
-        <p className="text-2xl font-extrabold tracking-wide text-turquoise">
+        <p className="text-2xl font-extrabold tracking-wide text-brandBlue">
           $ {Number(product.price).toFixed(0)}
         </p>
       </div>

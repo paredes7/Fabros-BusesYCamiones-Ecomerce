@@ -36,27 +36,7 @@ export default function VehicleShowcase({ product }) {
     selectedVariant?.values[0]?.attribute || "Variante";
   const selectedValue = selectedVariant?.values[0]?.value || "";
 
-  const handleAddToCart = async () => {
-    if (!selectedVariant || isOutOfStock) return;
 
-    setAdding(true);
-
-    await addToCart({
-      id: product.id,
-      nombre: product.name,
-      precio: selectedVariant.price,
-      cantidad: quantity,
-      image: mainImage,
-      sku: selectedVariant.sku,
-      stock: selectedVariant.stock,
-      variant: `${selectedAttribute}: ${selectedValue}`,
-    });
-
-    setAdding(false);
-    setSuccess(true);
-
-    setTimeout(() => setSuccess(false), 1500);
-  };
 
   // Especificaciones del producto (vienen de la BD)
   const specifications = {
@@ -92,7 +72,7 @@ export default function VehicleShowcase({ product }) {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-gray-900 tracking-tight leading-tight">
                 {product.name}
               </h1>
-              <div className="w-20 h-1 bg-gradient-to-r from-turquoise to-darkTurquoise rounded-full"></div>
+              <div className="w-20 h-1 bg-gradient-to-r from-brandBlue to-brandBlue rounded-full"></div>
             </div>
 
             {/* Description */}
@@ -116,11 +96,11 @@ export default function VehicleShowcase({ product }) {
             <div className="space-y-4 pt-4">
               {/* Quote Button */}
               <a
-                href={`https://wa.me/56978843627?text=Hola!%20Estoy%20interesado%20en%20cotizar:%0A${encodeURIComponent(
+                href={`https://wa.me/59174161243?text=Hola!%20Estoy%20interesado%20en%20cotizar:%0A${encodeURIComponent(
                   product.name
                 )}%0A${encodeURIComponent(currentUrl)}`}
                 target="_blank"
-                className="block text-center w-full py-4 px-6 rounded-xl bg-gradient-to-r from-turquoise to-darkTurquoise text-white font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 transform"
+                className="block text-center w-full py-4 px-6 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 transform"
               >
                 <span className="flex items-center justify-center gap-2">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -158,7 +138,7 @@ export default function VehicleShowcase({ product }) {
             <h2 className="text-4xl sm:text-5xl font-black uppercase text-gray-900 tracking-tight">
               Características
             </h2>
-            <div className="mt-4 mx-auto w-24 h-1 bg-gradient-to-r from-turquoise to-darkTurquoise rounded-full"></div>
+            <div className="mt-4 mx-auto w-24 h-1 bg-gradient-to-r from-brandBlue to-brandBlue rounded-full"></div>
           </div>
 
           {/* Tabs Navigation */}
@@ -170,7 +150,7 @@ export default function VehicleShowcase({ product }) {
                   onClick={() => setActiveTab(tab)}
                   className={`px-6 py-3 font-bold text-sm uppercase rounded-lg transition-all duration-300 ${
                     activeTab === tab
-                      ? "bg-gradient-to-r from-turquoise to-darkTurquoise text-white shadow-xl scale-105"
+                      ? "bg-gradient-to-r from-brandBlue to-brandBlue text-white shadow-xl scale-105"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105"
                   }`}
                 >

@@ -130,7 +130,7 @@ export default function CheckoutPageContent() {
             <Head title="Checkout" />
 
             <div className="max-w-3xl mx-auto p-6 bg-white text-grayCustom rounded-2xl shadow-lg border border-gray-200">
-                <CheckoutHeader className="text-turquoise mb-4" />
+                <CheckoutHeader className="text-brandBlue mb-4" />
 
                 <CustomerInfoForm
                     customerName={customerName}
@@ -147,7 +147,7 @@ export default function CheckoutPageContent() {
                     loading={loading}
                     subtotal={subtotal}
                     total={total}
-                    className="mb-6 bg-turquoise/10 rounded-lg p-4"
+                    className="mb-6 bg-brandBlue/10 rounded-lg p-4"
                 />
 
                 <MethodPay
@@ -161,11 +161,11 @@ export default function CheckoutPageContent() {
                     subtotal={subtotal}
                     total={total}
                     loading={loading}
-                    className="mb-6 bg-darkTurquoise/10 rounded-lg p-4"
+                    className="mb-6 bg-brandBlue/10 rounded-lg p-4"
                 />
 
                 <button
-                    className={`w-full bg-turquoise hover:bg-darkTurquoise text-white font-bold py-3 px-6 rounded-lg shadow-md flex justify-center items-center transition-all duration-300 ${(loading || processing) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`w-full bg-brandBlue hover:bg-brandBlue text-white font-bold py-3 px-6 rounded-lg shadow-md flex justify-center items-center transition-all duration-300 ${(loading || processing) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     onClick={handlePlaceOrder}
                     disabled={loading || processing}
                 >

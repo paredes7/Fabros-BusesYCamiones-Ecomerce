@@ -15,10 +15,18 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\VentasController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CaracteristicasController;
+use App\Http\Controllers\MultimediaController;
+
+
 use Inertia\Inertia;
  
 
 Route::get('/', [ProductController::class, 'index'])->name('welcome');
+
+Route::get('/nosotros', function () {
+    return Inertia::render('Nosotros');
+})->name('nosotros');
 
 Route::get('/Contacto', function () {
         return Inertia::render('Contacto');
@@ -61,7 +69,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/dashboard', [AdminControllerDashboard::class, 'index']);
 
-
+ 
         Route::get('/ventas/json', [VentasController::class, 'getCategoriasJson'])->name('admin.ventas.json1');
         Route::get('/ventas/search-sku', [VentasController::class, 'searchBySku']);
 
@@ -72,78 +80,85 @@ Route::prefix('admin')->group(function () {
         Route::delete('/categories/bulk-delete', [AdminControllerDashboard::class, 'bulkDeleteCategories']);
 
 
-   // Mostrar productos de una categoría
-Route::get('/categories/{category}/products', [AdminCategoryProductsController::class, 'index'])
-    ->name('admin.categories.products');
+        // Mostrar productos de una categoría
+        Route::get('/categories/{category}/products', [AdminCategoryProductsController::class, 'index'])
+            ->name('admin.categories.products');
 
-// Crear producto
-Route::post('/products', [AdminCategoryProductsController::class, 'store'])
-    ->name('admin.products.store');
+        // Crear producto
+        Route::post('/products', [AdminCategoryProductsController::class, 'store'])
+            ->name('admin.products.store');
 
-// Actualizar producto
-Route::put('/products/{product}', [AdminCategoryProductsController::class, 'update'])
-    ->name('admin.products.update');
+        // Actualizar producto
+        Route::put('/products/{product}', [AdminCategoryProductsController::class, 'update'])
+            ->name('admin.products.update');
 
-// Eliminar producto
-Route::delete('/products/{product}', [AdminCategoryProductsController::class, 'destroy'])
-    ->name('admin.products.destroy');
+        // Eliminar producto
+        Route::delete('/products/{product}', [AdminCategoryProductsController::class, 'destroy'])
+            ->name('admin.products.destroy');
 
-// Eliminar multimedia de un producto
-Route::delete('/products/{product}/multimedia/{media}', [AdminCategoryProductsController::class, 'destroyMultimedia'])
-    ->name('admin.products.multimedia.destroy');
-
-
-Route::post('/descontar-stock', [StockController::class, 'descontar'])
-    ->name('admin.stock.descontar');
-
-Route::get('/Ventas', [VentasController::class, 'index'])->name('admin.ventas');
-
-// Obtener atributos y variantes de un producto
-Route::get('/products/{product}/attributes', [AdminProductVariantsController::class, 'getAttributes'])
-    ->name('admin.products.attributes');
-
-//para redirigr a prodcutos de cada card que hay
-Route::get('/products/{slug}/{product}', [VentasController::class, 'show'])
-    ->where('slug', '.*')  // Acepta cualquier carácter en el slug
-    ->name('products.show.admin');
+        // Eliminar multimedia de un producto
+        Route::delete('/products/{product}/multimedia/{media}', [AdminCategoryProductsController::class, 'destroyMultimedia'])
+            ->name('admin.products.multimedia.destroy');
 
 
- 
-// Crear nuevas variantes (POST)
-Route::post('/products/{product}/variants', [AdminProductVariantsController::class, 'store'])
-    ->name('admin.products.variants.store');
+        Route::post('/descontar-stock', [StockController::class, 'descontar'])
+            ->name('admin.stock.descontar');
 
-// Actualizar variante existente (PUT)
-Route::put('/variants/{variant}', [AdminProductVariantsController::class, 'update'])
-    ->name('admin.variants.update');
+        Route::get('/Ventas', [VentasController::class, 'index'])->name('admin.ventas');
 
-// Eliminar variante (DELETE)
-Route::delete('/variants/{variant}', [AdminProductVariantsController::class, 'destroy'])
-    ->name('admin.variants.destroy');
+        // Obtener atributos y variantes de un producto
+        Route::get('/products/{product}/attributes', [AdminProductVariantsController::class, 'getAttributes'])
+            ->name('admin.products.attributes');
 
-
-//mostar estados y metodos de pago
-Route::get('/orders/meta', [OrderController::class, 'meta']);
-        // Ordenes
-    Route::get('/orders', [OrderController::class, 'index']);
-    Route::get('/orders/{order}', [OrderController::class, 'show']);
-    Route::put('/orders/{order}', [OrderController::class, 'update']);
-    Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
-    
-    // Reportes de ventas
-
-//reporte de prodcutso  
-Route::get('/productos/pdf', [ReportController::class, 'exportPdfProductos']);
-
-Route::get('/reportes', [ReportController::class, 'ventas']);
-Route::get('/reportes/excel', [ReportController::class, 'exportExcel']);
-Route::get('/reportes/csv', [ReportController::class, 'exportCsv']);
-Route::get('/reportes/pdf', [ReportController::class, 'exportPdf']);
+        //para redirigr a prodcutos de cada card que hay
+        Route::get('/products/{slug}/{product}', [VentasController::class, 'show'])
+            ->where('slug', '.*')  // Acepta cualquier carácter en el slug
+            ->name('products.show.admin');
 
 
+        
+        // Crear nuevas variantes (POST)
+        Route::post('/products/{product}/variants', [AdminProductVariantsController::class, 'store'])
+            ->name('admin.products.variants.store');
+
+        // Actualizar variante existente (PUT)
+        Route::put('/variants/{variant}', [AdminProductVariantsController::class, 'update'])
+            ->name('admin.variants.update');
+
+        // Eliminar variante (DELETE)
+        Route::delete('/variants/{variant}', [AdminProductVariantsController::class, 'destroy'])
+            ->name('admin.variants.destroy');
 
 
+        //mostar estados y metodos de pago
+        Route::get('/orders/meta', [OrderController::class, 'meta']);
+                // Ordenes
+            Route::get('/orders', [OrderController::class, 'index']);
+            Route::get('/orders/{order}', [OrderController::class, 'show']);
+            Route::put('/orders/{order}', [OrderController::class, 'update']);
+            Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
+            
+            // Reportes de ventas
 
+        //reporte de prodcutso  
+        Route::get('/productos/pdf', [ReportController::class, 'exportPdfProductos']);
+
+        Route::get('/reportes', [ReportController::class, 'ventas']);
+        Route::get('/reportes/excel', [ReportController::class, 'exportExcel']);
+        Route::get('/reportes/csv', [ReportController::class, 'exportCsv']);
+        Route::get('/reportes/pdf', [ReportController::class, 'exportPdf']);
+
+        // Rutas para características
+        Route::get('/productos/{id}/caracteristicas', [CaracteristicasController::class, 'index']);
+        Route::post('/productos/{id}/caracteristicas', [CaracteristicasController::class, 'store']);
+        Route::put('/caracteristicas/{id}', [CaracteristicasController::class, 'update']);
+        Route::delete('/caracteristicas/{id}', [CaracteristicasController::class, 'destroy']);
+
+        //Rutas para multimedia
+        Route::get('/productos/{id}/multimedia', [MultimediaController::class, 'index']);
+        Route::post('/productos/{id}/multimedia', [MultimediaController::class, 'store']);
+        Route::post('/multimedia/{id}', [MultimediaController::class, 'update']);
+        Route::delete('/multimedia/{id}', [MultimediaController::class, 'destroy']);
 
     });
 });

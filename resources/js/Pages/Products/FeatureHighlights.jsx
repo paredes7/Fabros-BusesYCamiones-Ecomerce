@@ -46,7 +46,7 @@ export default function FeatureHighlights({ specifications }) {
           className="group relative bg-gradient-to-br from-gray-50 to-gray-100 p-5 rounded-2xl text-center space-y-3 hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-gray-200"
         >
           {/* Icon */}
-          <div className="w-14 h-14 mx-auto text-turquoise group-hover:text-darkTurquoise transition-colors duration-300">
+          <div className="w-14 h-14 mx-auto text-brandBlue group-hover:text-brandBlue transition-colors duration-300">
             {feature.icon}
           </div>
 
@@ -61,7 +61,7 @@ export default function FeatureHighlights({ specifications }) {
           </div>
 
           {/* Hover Effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-turquoise/5 to-darkTurquoise/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-brandBlue/5 to-brandBlue/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
         </div>
       ))}
     </div>

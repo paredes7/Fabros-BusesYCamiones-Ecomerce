@@ -7,7 +7,7 @@ export default function CheckoutHeader() {
             <div>
                 {/* Nombre de la empresa */}
                 <h1
-                    className="text-4xl font-bold text-turquoise"
+                    className="text-4xl font-bold text-brandBlue"
                     style={{ fontFamily: "'Playfair Display', serif", letterSpacing: '1px' }}
                 >
                     MARO
@@ -31,7 +31,7 @@ export default function CheckoutHeader() {
             {/* Icono de Home */}
             <Link
                 href="/"
-                className="text-turquoise hover:text-darkTurquoise transition-colors"
+                className="text-brandBlue hover:text-brandBlue transition-colors"
             >
                 <Home size={28} />
             </Link>

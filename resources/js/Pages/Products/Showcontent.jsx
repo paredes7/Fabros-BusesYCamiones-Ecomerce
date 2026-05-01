@@ -72,8 +72,8 @@ export default function ShowProduct({ product }) {
 
 
       <div className="space-y-6 sticky top-0" style={{ fontFamily: "'Playfair Display', serif" }}>
-        <h1 className="text-4xl font-extrabold uppercase text-turquoise">{product.name}</h1>
-        <p className="text-3xl font-bold text-turquoise">
+        <h1 className="text-4xl font-extrabold uppercase text-brandBlue">{product.name}</h1>
+        <p className="text-3xl font-bold text-brandBlue">
           $ {Number(selectedVariant?.price ?? product.price).toFixed(0)}
         </p>
 
@@ -99,12 +99,12 @@ export default function ShowProduct({ product }) {
                 disabled={v.stock === 0}
                 className={`min-w-[45px] h-10 flex items-center justify-center border rounded-xl text-lg font-bold transition
               ${selectedVariant?.id === v.id
-                    ? "bg-turquoise text-darkGray border-turquoise"
+                    ? "bg-brandBlue text-darkGray border-brandBlue"
                     : "bg-white text-darkGray border-grayCustom"
                   }
               ${v.stock === 0
                     ? "opacity-40 cursor-not-allowed"
-                    : "hover:border-darkTurquoise"
+                    : "hover:border-brandBlue"
                   }`}
               >
                 {label}
@@ -122,7 +122,7 @@ export default function ShowProduct({ product }) {
                 <p className="font-semibold text-darkGray">Stock disponible: {stock}</p>
                 <div className="w-full h-2 bg-grayCustom/30 rounded-full mt-1">
                   <div
-                    className="h-full bg-darkTurquoise rounded-full"
+                    className="h-full bg-brandBlue rounded-full"
                     style={{ width: `${Math.min((stock / 20) * 100, 100)}%` }}
                   ></div>
                 </div>
@@ -137,12 +137,12 @@ export default function ShowProduct({ product }) {
             <div className="flex items-center gap-4 mt-2">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="w-10 h-10 border border-grayCustom rounded-full text-2xl hover:border-turquoise transition"
+                className="w-10 h-10 border border-grayCustom rounded-full text-2xl hover:border-brandBlue transition"
               >−</button>
               <span className="text-2xl font-bold text-darkGray">{quantity}</span>
               <button
                 onClick={() => setQuantity((q) => (q < stock ? q + 1 : q))}
-                className="w-10 h-10 border border-grayCustom rounded-full text-2xl hover:border-turquoise transition"
+                className="w-10 h-10 border border-grayCustom rounded-full text-2xl hover:border-brandBlue transition"
               >+</button>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function ShowProduct({ product }) {
           className={`w-full py-4 rounded-xl text-lg font-bold transition
         ${!selectedVariant || isOutOfStock
               ? "bg-gray-400 text-white cursor-not-allowed"
-              : "bg-turquoise text-darkGray hover:bg-darkTurquoise"
+              : "bg-brandBlue text-darkGray hover:bg-brandBlue"
             }`}
         >
           {adding ? "Añadiendo..." : success ? "Añadido " : "Añadir al carrito"}

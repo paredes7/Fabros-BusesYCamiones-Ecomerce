@@ -41,8 +41,8 @@ function addFooter(doc, pageW, pageH) {
   doc.setTextColor(100);
   doc.setFont("helvetica", "normal");
   const date = new Date().toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
-  doc.text(`PRAGATI · Ficha generada el ${date}`, 14, pageH - 5);
-  doc.text("www.pragati.cl", pageW - 14, pageH - 5, { align: "right" });
+  doc.text(`FABROS · Ficha generada el ${date}`, 14, pageH - 5);
+  doc.text("www.fabros.com.bo", pageW - 14, pageH - 5, { align: "right" });
 }
 
 async function generateProductPDF(product) {
@@ -63,7 +63,7 @@ async function generateProductPDF(product) {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
-  doc.text("PRAGATI", margin, 15);
+  doc.text("FABROS", margin, 15);
 
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");

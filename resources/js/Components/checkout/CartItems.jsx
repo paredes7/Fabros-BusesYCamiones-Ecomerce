@@ -51,7 +51,7 @@ export default function CartItems({ cart, loading, total }) {
                         <tfoot>
                             <tr>
                                 <td colSpan="4" className="py-2 px-4 text-right font-bold text-darkGray text-lg">Total:</td>
-                                <td className="py-2 px-4 text-right font-bold text-lg text-turquoise">
+                                <td className="py-2 px-4 text-right font-bold text-lg text-brandBlue">
                                     {Number(total).toFixed(0)} $
                                 </td>
                             </tr>
@@ -92,7 +92,7 @@ export default function CartItems({ cart, loading, total }) {
 
                         <div className="flex justify-between border-t border-grayCustom pt-3 text-lg font-bold text-darkGray">
                             <span>Total:</span>
-                            <span className="text-turquoise">{Number(total).toFixed(0)} $</span>
+                            <span className="text-brandBlue">{Number(total).toFixed(0)} $</span>
                         </div>
                     </div>
                 </div>

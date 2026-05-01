@@ -21,7 +21,7 @@ export default function OrderSummary({ cart, subtotal, total, loading }) {
 
                     <div className="flex justify-between text-grayCustom">
                         <span>Total:</span>
-                        <span className="font-bold text-turquoise text-lg">{Number(total).toFixed(0)} $</span>
+                        <span className="font-bold text-brandBlue text-lg">{Number(total).toFixed(0)} $</span>
                     </div>
                 </div>
             )}

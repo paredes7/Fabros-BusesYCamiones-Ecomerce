@@ -47,7 +47,7 @@ export default function CartModal({ isOpen, onClose }) {
       >
         {/* Cerrar */}
         <button
-          className="absolute top-4 right-4 text-grayCustom hover:text-turquoise transition"
+          className="absolute top-4 right-4 text-grayCustom hover:text-brandBlue transition"
           onClick={onClose}
         >
           <X size={24} />
@@ -55,7 +55,7 @@ export default function CartModal({ isOpen, onClose }) {
 
         {/* Título */}
         <div className="flex gap-12 items-center mb-4">
-          <h2 className="text-2xl font-bold text-turquoise">Mi Carrito</h2>
+          <h2 className="text-2xl font-bold text-brandBlue">Mi Carrito</h2>
 
           {cart.length > 0 && (
             <button
@@ -105,7 +105,7 @@ export default function CartModal({ isOpen, onClose }) {
                     <button
                       onClick={() => updateQuantity(item.rowId, item.qty - 1)}
                       disabled={item.qty <= 1}
-                      className="p-1 bg-darkTurquoise/40 rounded-l hover:bg-darkTurquoise transition"
+                      className="p-1 bg-brandBlue/40 rounded-l hover:bg-brandBlue transition"
                     >
                       <Minus size={16} />
                     </button>
@@ -116,7 +116,7 @@ export default function CartModal({ isOpen, onClose }) {
 
                     <button
                       onClick={() => updateQuantity(item.rowId, item.qty + 1)}
-                      className="p-1 bg-darkTurquoise/40 rounded-r hover:bg-darkTurquoise transition"
+                      className="p-1 bg-brandBlue/40 rounded-r hover:bg-brandBlue transition"
                     >
                       <Plus size={16} />
                     </button>
@@ -124,7 +124,7 @@ export default function CartModal({ isOpen, onClose }) {
                 </div>
 
                 <div className="text-right flex flex-col justify-between h-full">
-                  <p className="font-bold text-turquoise">
+                  <p className="font-bold text-brandBlue">
                     $ {(item.price * item.qty).toFixed(0)}
                   </p>
 
@@ -145,7 +145,7 @@ export default function CartModal({ isOpen, onClose }) {
           <div className="mt-4 border-t border-grayCustom/30 pt-4 flex flex-col gap-4">
             <p className="flex justify-between font-bold text-lg">
               <span>Total:</span>
-              <span className="text-turquoise">
+              <span className="text-brandBlue">
                 $ {total.toFixed(0)}
               </span>
             </p>
@@ -157,11 +157,11 @@ export default function CartModal({ isOpen, onClose }) {
                 w-full
                 py-3
                 text-center
-                bg-turquoise
+                bg-brandBlue
                 text-darkGray
                 font-bold
                 rounded-xl
-                hover:bg-darkTurquoise
+                hover:bg-brandBlue
                 transition
               "
             >

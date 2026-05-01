@@ -8,7 +8,7 @@ export default function ColorSelector({ colors, productName, productImage }) {
       {/* Left Side - Info */}
       <div className="space-y-6" style={{ fontFamily: "'Playfair Display', serif" }}>
         <h2 className="text-4xl font-bold text-darkGray">COLORES</h2>
-        <h3 className="text-3xl font-bold text-turquoise">{productName}</h3>
+        <h3 className="text-3xl font-bold text-brandBlue">{productName}</h3>
         <p className="text-lg text-grayCustom leading-relaxed">
           Todo lo que se necesita para el trabajo diario, brindándote la
           capacidad y el confort necesario.
@@ -26,7 +26,7 @@ export default function ColorSelector({ colors, productName, productImage }) {
                 onClick={() => setSelectedColor(color)}
                 className={`relative w-14 h-14 rounded-full border-4 transition-all ${
                   selectedColor.name === color.name
-                    ? "border-turquoise scale-110 shadow-xl"
+                    ? "border-brandBlue scale-110 shadow-xl"
                     : "border-gray-300 hover:border-grayCustom"
                 }`}
                 style={{ backgroundColor: color.hex }}

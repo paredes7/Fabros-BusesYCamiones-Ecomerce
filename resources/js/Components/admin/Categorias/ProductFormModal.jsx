@@ -2,26 +2,36 @@ import { useState } from "react";
 
 export default function ProductFormModal({ categoryId, product, onClose, onSave }) {
   const existingDocumento = product?.multimedia?.find((m) => m.multimedia_type_id === 7) || null;
+  const [documentoFile, setDocumentoFile] = useState(null);
+  const [removeDocumento, setRemoveDocumento] = useState(false);
+  const [currentDocumento, setCurrentDocumento] = useState(existingDocumento);
 
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",
+    longDescription: product?.longDescription || "",
+    motor: product?.motor || "",
+    potencia: product?.potencia || "",
+    transmision: product?.transmision || "",
+    peso: product?.peso || "",
     files: [],
   });
 
   const [existingMedia, setExistingMedia] = useState(
-    (product?.multimedia || []).filter((m) => m.multimedia_type_id !== 7)
+    product?.multimedia?.filter((m) => m.multimedia_type_id === 1) || []
   );
   const [previews, setPreviews] = useState([]);
-  const [documentoFile, setDocumentoFile] = useState(null);
-  const [removeDocumento, setRemoveDocumento] = useState(false);
-  const [currentDocumento, setCurrentDocumento] = useState(existingDocumento);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
+    if (name === "documento") {
+      setDocumentoFile(files[0] || null);
+      return;
+    }
 
     if (name === "files") {
       const newFiles = Array.from(files);
@@ -31,17 +41,9 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
       }));
       setFormData((prev) => ({ ...prev, files: [...prev.files, ...newFiles] }));
       setPreviews((prev) => [...prev, ...newPreviews]);
-    } else if (name === "documento") {
-      setDocumentoFile(files[0] || null);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  };
-
-  const handleQuitarDocumento = () => {
-    setRemoveDocumento(true);
-    setCurrentDocumento(null);
-    setDocumentoFile(null);
   };
 
   const handleRemoveExisting = (id) => {
@@ -54,7 +56,6 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
       files: prev.files.filter((_, i) => i !== index),
     }));
     setPreviews((prev) => {
-      // liberar URL.createObjectURL
       URL.revokeObjectURL(prev[index].url);
       return prev.filter((_, i) => i !== index);
     });
@@ -71,21 +72,20 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
       Object.entries(formData).forEach(([key, value]) => {
         if (key === "files") {
           value.forEach((file) => data.append("files[]", file));
-        } else if (value !== null) {
+        } else if (value !== null && value !== "") {
           data.append(key, value);
         }
       });
 
+      if (documentoFile) data.append("documento", documentoFile);
+      if (removeDocumento) data.append("remove_documento", "1");
+
       const removedIds = product?.multimedia
-        ?.filter((m) => m.multimedia_type_id !== 7)
-        .filter((m) => !existingMedia.find((em) => em.id === m.id))
+        ?.filter((m) => m.multimedia_type_id === 1 && !existingMedia.find((em) => em.id === m.id))
         .map((m) => m.id);
       if (removedIds?.length) {
         removedIds.forEach((id) => data.append("removed_media_ids[]", id));
       }
-
-      if (documentoFile) data.append("documento", documentoFile);
-      if (removeDocumento) data.append("remove_documento", "1");
 
       let url = "/admin/products";
       let method = "POST";
@@ -101,7 +101,7 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
         method,
         headers: {
           "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
-          "Accept": "application/json", // clave para evitar HTML
+          "Accept": "application/json",
         },
         body: data,
       });
@@ -150,123 +150,184 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
           <form
             onSubmit={handleSubmit}
-            className="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 grid gap-6 overflow-auto max-h-[90vh]"
+            className="bg-white rounded-xl shadow-lg w-full max-w-2xl p-6 grid gap-6 overflow-auto max-h-[90vh]"
           >
             <h2 className="text-2xl font-bold text-center text-gray-800">
               {product ? "Editar" : "Agregar"} Producto
             </h2>
 
             {Object.keys(errors).length > 0 && (
-              <div className="bg-red-100 text-red-700 p-2 rounded">
+              <div className="bg-red-100 text-red-700 p-3 rounded">
                 {Object.entries(errors).map(([field, msgs]) => (
-                  <p key={field}>{field}: {msgs.join(", ")}</p>
+                  <p key={field} className="text-sm">
+                    <strong>{field}:</strong> {msgs.join(", ")}
+                  </p>
                 ))}
               </div>
             )}
 
-            {/* Multimedia existente */}
+            {/* Multimedia existente (solo General) */}
             {existingMedia.length > 0 && (
-              <div className="grid grid-cols-3 gap-2">
-                {existingMedia.map((media) => (
-                  <div key={media.id} className="relative">
-                    {media.type === "image" ? (
-                      <img src={media.url} className="w-full h-24 object-cover rounded border" />
-                    ) : (
-                      <video src={media.url} className="w-full h-24 rounded" controls />
-                    )}
-                    <button
-                      type="button"
-                      className="absolute top-1 right-1 bg-red-500 text-white rounded px-1"
-                      onClick={() => handleRemoveExisting(media.id)}
-                    >
-                      X
-                    </button>
-                  </div>
-                ))}
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Imágenes Generales Actuales
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {existingMedia.map((media) => (
+                    <div key={media.id} className="relative">
+                      {media.type === "image" ? (
+                        <img src={media.url} className="w-full h-24 object-cover rounded border-2 border-gray-300" alt="Multimedia" />
+                      ) : (
+                        <video src={media.url} className="w-full h-24 rounded border-2 border-gray-300" controls />
+                      )}
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+                        onClick={() => handleRemoveExisting(media.id)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
             {/* Previews de archivos nuevos */}
             {previews.length > 0 && (
-              <div className="grid grid-cols-3 gap-2 mt-2">
-                {previews.map(({ file, url }, i) => {
-                  const isVideo = file.type.startsWith("video");
-                  return (
-                    <div key={i} className="relative">
-                      {isVideo ? (
-                        <video src={url} className="w-full h-24 rounded" controls />
-                      ) : (
-                        <img src={url} className="w-full h-24 object-cover rounded border" />
-                      )}
-                      <button
-                        type="button"
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded px-1"
-                        onClick={() => handleRemoveNewFile(i)}
-                      >
-                        X
-                      </button>
-                    </div>
-                  );
-                })}
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Nuevas Imágenes Generales
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {previews.map(({ file, url }, i) => {
+                    const isVideo = file.type.startsWith("video");
+                    return (
+                      <div key={i} className="relative">
+                        {isVideo ? (
+                          <video src={url} className="w-full h-24 rounded border-2 border-gray-300" controls />
+                        ) : (
+                          <img src={url} className="w-full h-24 object-cover rounded border-2 border-gray-300" alt="Preview" />
+                        )}
+                        <button
+                          type="button"
+                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+                          onClick={() => handleRemoveNewFile(i)}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
 
             {/* INPUTS */}
             <div className="grid gap-4">
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Nombre</label>
+                <label className="block text-gray-700 font-semibold mb-1">
+                  Nombre <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Descripción</label>
+                <label className="block text-gray-700 font-semibold mb-1">Descripción Corta</label>
                 <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded"
+                  rows={2}
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  placeholder="Descripción breve del producto"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Agregar Multimedia</label>
-                <input
-                  type="file"
-                  name="files"
-                  multiple
-                  accept="image/*,video/*"
+                <label className="block text-gray-700 font-semibold mb-1">Descripción Larga</label>
+                <textarea
+                  name="longDescription"
+                  value={formData.longDescription}
                   onChange={handleChange}
+                  rows={4}
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  placeholder="Descripción detallada del producto (puede incluir HTML)"
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">Documento del producto</label>
-                <p className="text-xs text-gray-500 mb-2">PDF, Word o Excel · máx. 20 MB</p>
+              {/* Especificaciones técnicas */}
+              <div className="border-t pt-4">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3">Especificaciones Técnicas</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-700 font-medium mb-1">Motor</label>
+                    <input
+                      type="text"
+                      name="motor"
+                      value={formData.motor}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Ej: 2.0L Turbo"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 font-medium mb-1">Potencia</label>
+                    <input
+                      type="text"
+                      name="potencia"
+                      value={formData.potencia}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Ej: 150 HP"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 font-medium mb-1">Transmisión</label>
+                    <input
+                      type="text"
+                      name="transmision"
+                      value={formData.transmision}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Ej: Automática 6 vel."
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 font-medium mb-1">Peso</label>
+                    <input
+                      type="text"
+                      name="peso"
+                      value={formData.peso}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Ej: 1450 kg"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                {currentDocumento && (
-                  <div className="flex items-center gap-2 mb-2 p-2 bg-gray-50 rounded border">
-                    <span className="text-sm text-gray-700 truncate flex-1">
-                      {currentDocumento.title || "Documento actual"}
-                    </span>
-                    <a
-                      href={currentDocumento.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs text-blue-600 underline shrink-0"
-                    >
-                      Ver
-                    </a>
+              {/* Documento adjunto */}
+              <div className="border-t pt-4">
+                <label className="block text-gray-700 font-semibold mb-1">
+                  Documento adjunto <span className="text-gray-400 font-normal text-sm">(PDF, Word, Excel)</span>
+                </label>
+
+                {currentDocumento && !removeDocumento && !documentoFile && (
+                  <div className="flex items-center gap-3 mb-2 p-2 bg-gray-50 rounded-lg border">
+                    <span className="text-sm text-gray-700 flex-1 truncate">📄 {currentDocumento.title || "Documento actual"}</span>
+                    <a href={currentDocumento.url} target="_blank" rel="noreferrer" className="text-blue-600 text-xs hover:underline">Ver</a>
                     <button
                       type="button"
-                      onClick={handleQuitarDocumento}
-                      className="text-xs text-red-500 underline shrink-0"
+                      className="text-red-500 text-xs hover:text-red-700 font-semibold"
+                      onClick={() => { setRemoveDocumento(true); setCurrentDocumento(null); }}
                     >
                       Quitar
                     </button>
@@ -274,42 +335,55 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
                 )}
 
                 {documentoFile && (
-                  <div className="flex items-center gap-2 mb-2 p-2 bg-green-50 rounded border border-green-200">
-                    <span className="text-sm text-green-700 truncate flex-1">{documentoFile.name}</span>
+                  <div className="flex items-center gap-3 mb-2 p-2 bg-blue-50 rounded-lg border border-blue-200">
+                    <span className="text-sm text-blue-700 flex-1 truncate">📄 {documentoFile.name}</span>
                     <button
                       type="button"
+                      className="text-red-500 text-xs hover:text-red-700 font-semibold"
                       onClick={() => setDocumentoFile(null)}
-                      className="text-xs text-red-500 underline shrink-0"
                     >
                       Quitar
                     </button>
                   </div>
                 )}
 
-                {!documentoFile && (
-                  <input
-                    type="file"
-                    name="documento"
-                    accept=".pdf,.doc,.docx,.xlsx"
-                    onChange={handleChange}
-                  />
-                )}
+                <input
+                  type="file"
+                  name="documento"
+                  accept=".pdf,.doc,.docx,.xlsx"
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </div>
+
+              {/* Multimedia General */}
+              <div className="border-t pt-4">
+                <label className="block text-gray-700 font-semibold mb-1">
+                  Agregar Imágenes / Videos
+                </label>
+                <input
+                  type="file"
+                  name="files"
+                  multiple
+                  accept="image/*,video/*"
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100"
+                />
               </div>
             </div>
 
             {/* BOTONES */}
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 border-t pt-4">
               <button
                 type="button"
-                className="px-4 py-2 bg-gray-300 rounded"
+                className="px-6 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 font-semibold"
                 onClick={onClose}
               >
                 Cancelar
               </button>
-
               <button
                 type="submit"
-                className="px-4 py-2 bg-pink-600 text-white rounded"
+                className="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 font-semibold"
               >
                 Guardar
               </button>

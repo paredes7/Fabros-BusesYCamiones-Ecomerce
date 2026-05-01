@@ -64,8 +64,8 @@ export default function Products({ categories: initialCategories = [], search: i
                 pl-4
                 py-2
                 border-l-[6px]
-                border-turquoise
-                text-turquoise
+                border-brandBlue
+                text-brandBlue
               "
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
@@ -100,7 +100,7 @@ export default function Products({ categories: initialCategories = [], search: i
                       tracking-wide
                       pl-3
                       border-l-4
-                      border-darkTurquoise
+                      border-brandBlue
                       text-grayCustom
                       mb-10
                     "
@@ -130,10 +130,10 @@ export default function Products({ categories: initialCategories = [], search: i
             py-3
             rounded-xl
             border
-            border-turquoise
-            text-turquoise
+            border-brandBlue
+            text-brandBlue
             font-semibold
-            hover:bg-turquoise
+            hover:bg-brandBlue
             hover:text-darkGray
             transition
             disabled:opacity-50
@@ -190,7 +190,7 @@ function CategorySwiper({ products }) {
               flex
               justify-center
               border
-              ${outOfStock ? 'border-darkTurquoise opacity-80' : 'border-gray-200'}
+              ${outOfStock ? 'border-brandBlue opacity-80' : 'border-gray-200'}
             `}
           >
             <ProductCard product={product} />

@@ -53,7 +53,7 @@ export default function CustomerInfoForm({
                     placeholder="Ingresa tu nombre completo"
                     className={`w-full p-3 rounded-xl bg-gray-100 text-darkGray border ${
                         nameError ? "border-red-500" : "border-grayCustom"
-                    } focus:border-turquoise focus:ring-1 focus:ring-turquoise outline-none transition`}
+                    } focus:border-brandBlue focus:ring-1 focus:ring-brandBlue outline-none transition`}
                     required
                 />
                 {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
@@ -69,7 +69,7 @@ export default function CustomerInfoForm({
                     placeholder="Ingresa tu número"
                     className={`w-full p-3 rounded-xl bg-gray-100 text-darkGray border ${
                         phoneError ? "border-red-500" : "border-grayCustom"
-                    } focus:border-turquoise focus:ring-1 focus:ring-turquoise outline-none transition`}
+                    } focus:border-brandBlue focus:ring-1 focus:ring-brandBlue outline-none transition`}
                     required
                 />
                 {phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
@@ -85,7 +85,7 @@ export default function CustomerInfoForm({
                     placeholder="Ingresa tu correo"
                     className={`w-full p-3 rounded-xl bg-gray-100 text-darkGray border ${
                         emailError ? "border-red-500" : "border-grayCustom"
-                    } focus:border-turquoise focus:ring-1 focus:ring-turquoise outline-none transition`}
+                    } focus:border-brandBlue focus:ring-1 focus:ring-brandBlue outline-none transition`}
                     required
                 />
                 {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}

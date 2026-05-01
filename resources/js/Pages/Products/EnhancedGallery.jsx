@@ -66,8 +66,8 @@ export default function EnhancedGallery({ multimedia, productName }) {
                 onClick={() => setSelectedIndex(index)}
                 className={`relative aspect-square rounded-xl overflow-hidden border-3 transition-all duration-300 transform hover:scale-105 ${
                   selectedIndex === index
-                    ? "border-turquoise shadow-xl ring-2 ring-turquoise/50 scale-105"
-                    : "border-gray-300 hover:border-darkTurquoise shadow-md"
+                    ? "border-brandBlue shadow-xl ring-2 ring-brandBlue/50 scale-105"
+                    : "border-gray-300 hover:border-brandBlue shadow-md"
                 }`}
               >
                 {isVideoThumb ? (
@@ -95,7 +95,7 @@ export default function EnhancedGallery({ multimedia, productName }) {
                 )}
                 {/* Selection indicator */}
                 {selectedIndex === index && (
-                  <div className="absolute inset-0 bg-turquoise/20 border-2 border-turquoise"></div>
+                  <div className="absolute inset-0 bg-brandBlue/20 border-2 border-brandBlue"></div>
                 )}
               </button>
             );

@@ -3,8 +3,19 @@ import { useState } from 'react';
 
 export default function CategoryProducts({ category }) {
     const [hoveredCard, setHoveredCard] = useState(null);
-
     if (!category) return null;
+
+    // Helper para generar slug consistente
+    const generateSlug = (name) => {
+        return name
+            .toLowerCase()
+            .replace(/\./g, '-')      // Reemplazar puntos por guiones
+            .replace(/\s+/g, '-')     // Reemplazar espacios por guiones
+            .replace(/[^\w\-]+/g, '') // Eliminar caracteres especiales
+            .replace(/\-\-+/g, '-')   // Reemplazar múltiples guiones por uno solo
+            .replace(/^-+/, '')       // Eliminar guiones al inicio
+            .replace(/-+$/, '');      // Eliminar guiones al final
+    };
 
     const renderProductsGrid = (products) => (
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
@@ -21,11 +32,18 @@ export default function CategoryProducts({ category }) {
 
                     <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
                         <img
-                            src={p.multimedia?.[0]?.url || '/placeholder.png'}
+                            src={
+                                // Buscar primero multimedia_type_id = 1
+                                p.multimedia?.find(m => m.multimedia_type_id === 1)?.url
+                                // Si no hay, usar la primera
+                                || p.multimedia?.[0]?.url
+                                // Si tampoco hay, placeholder
+                                || '/placeholder.png'
+                            }
                             alt={p.name || 'Producto'}
                             className="absolute inset-0 w-full h-full object-cover
-                       transition-transform duration-700
-                       group-hover:scale-110"
+               transition-transform duration-700
+               group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t
                           from-black/40 via-black/20 to-transparent
@@ -60,7 +78,7 @@ export default function CategoryProducts({ category }) {
 
 
                         <Link
-                            href={`/products/${p.name.toLowerCase().replace(/\s+/g, '-')}/${p.id}`}
+                            href={`/products/${generateSlug(p.name)}/${p.id}`}
                             className="mt-5 inline-block w-full py-3 bg-black text-white font-semibold
                             rounded-xl shadow-md hover:bg-gray-800 transition-colors"
                         >

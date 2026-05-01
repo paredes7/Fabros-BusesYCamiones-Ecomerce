@@ -23,10 +23,10 @@ export default function CartIcon({ onClick }) {
           relative
           transition-all
           duration-300
-          hover:bg-darkTurquoise
+          hover:bg-brandBlue
         "
       >
-        <ShoppingCart size={32} className="text-turquoise" />
+        <ShoppingCart size={32} className="text-brandBlue" />
 
         {cartCount > 0 && (
           <span
@@ -34,7 +34,7 @@ export default function CartIcon({ onClick }) {
               absolute
               top-12  
               right-1
-              bg-turquoise
+              bg-brandBlue
               text-darkGray
               text-xs
               font-bold
