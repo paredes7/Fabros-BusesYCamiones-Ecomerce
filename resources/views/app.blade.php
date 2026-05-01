@@ -6,26 +6,26 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Título dinámico -->
-    <title inertia>{{ config('app.name', 'Fabros Motors Bolivia') }}</title>
+    <title inertia>{{ config('app.name', 'Fabros Bolivia') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="https://res.cloudinary.com/dnbklbswg/image/upload/v1767853320/favicon-512x512_2_qo3drn.png" type="image/jpeg">
+    <link rel="icon" href="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg" type="image/jpeg">
 
     <!-- Fuente principal -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Meta Open Graph para redes sociales -->
-    <meta property="og:title" content="Fabros Motors Bolivia" />
+    <meta property="og:title" content="Fabros Bolivia" />
     <meta property="og:description" content="Autos de calidad disponibles en Bolivia" />
-    <meta property="og:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1767853320/favicon-512x512_2_qo3drn.png" />
+    <meta property="og:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg" />
     <meta property="og:url" content="{{ url('/') }}" />
     <meta property="og:type" content="website" />
 
     <!-- Meta para Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Fabros Motors Bolivia" />
+    <meta name="twitter:title" content="Fabros Bolivia" />
     <meta name="twitter:description" content="Ofrecemos autos de calidad en Bolivia" />
-    <meta name="twitter:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1767853320/favicon-512x512_2_qo3drn.png" />
+    <meta name="twitter:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg" />
 
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.bunny.net">
