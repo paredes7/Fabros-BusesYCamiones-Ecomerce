@@ -128,37 +128,37 @@ const [currentProduct, setCurrentProduct] = useState(null);
 
           
 
-              <div className="flex gap-2 mt-4">
+              <div className="flex flex-wrap gap-2 mt-4">
                 <button
-                  className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm"
+                  className="flex-1 px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm text-center"
                   onClick={() => { setEditingProduct(product); setModalOpen(true); }}
                 >
                   Editar
                 </button>
                 <button
-                  className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+                  className="flex-1 px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm text-center"
                   onClick={() => handleOpenVariantsModal(product)}
                 >
                   Asignar variantes
                 </button>
                 <button
-                  className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+                  className="flex-1 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm text-center"
                   onClick={() => handleDeleteProduct(product.id)}
                 >
                   Eliminar
                 </button>
 
-                <Link href={`/admin/productos/${product.id}/caracteristicas`} >
+                <Link href={`/admin/productos/${product.id}/caracteristicas`} className="flex-1 flex">
                 <button
-                  className="px-2 py-1 bg-green-900 text-white rounded hover:bg-red-600 text-sm"
+                  className="w-full px-2 py-1 bg-green-900 text-white rounded hover:bg-green-800 text-sm text-center"
                 >
                   Caracteristicas
                 </button>
                 </Link>
 
-                <Link href={`/admin/productos/${product.id}/multimedia`} >
+                <Link href={`/admin/productos/${product.id}/multimedia`} className="flex-1">
                 <button
-                  className="px-2 py-1 bg-violet-800 text-white rounded hover:bg-red-600 text-sm"
+                  className="w-full px-2 py-1 bg-violet-800 text-white rounded hover:bg-violet-700 text-sm text-center"
                 >
                   Multimedia
                 </button>
