@@ -323,7 +323,24 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
                 {currentDocumento && !removeDocumento && !documentoFile && (
                   <div className="flex items-center gap-3 mb-2 p-2 bg-gray-50 rounded-lg border">
                     <span className="text-sm text-gray-700 flex-1 truncate">📄 {currentDocumento.title || "Documento actual"}</span>
-                    <a href={currentDocumento.url} target="_blank" rel="noreferrer" className="text-blue-600 text-xs hover:underline">Ver</a>
+                    <button
+                      type="button"
+                      className="text-blue-600 text-xs hover:underline"
+                      onClick={async () => {
+                        try {
+                          const res = await fetch(currentDocumento.url);
+                          const blob = await res.blob();
+                          const blobUrl = URL.createObjectURL(blob);
+                          const a = document.createElement("a");
+                          a.href = blobUrl;
+                          a.download = currentDocumento.title || "documento";
+                          a.click();
+                          URL.revokeObjectURL(blobUrl);
+                        } catch {
+                          window.open(currentDocumento.url, "_blank");
+                        }
+                      }}
+                    >Ver</button>
                     <button
                       type="button"
                       className="text-red-500 text-xs hover:text-red-700 font-semibold"
