@@ -1,27 +1,18 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import ParteArriba from './Header/partearriba';
 import NavLink from './Header/Navlink';
 
-const LEFT_LINKS = [
-  { href: '/nosotros',   label: 'NOSOTROS' },
-  { href: '/buses',      label: 'BUSES' },
-  { href: '/camiones',   label: 'CAMIONES' },
-];
-
-const RIGHT_LINKS = [
-  { href: '/maquinaria',     label: 'MAQUINARIA' },
-  { href: '/servicios',      label: 'SERVICIOS' },
-  { href: '/concesionarios', label: 'CONCESIONARIOS' },
-];
-
-const ALL_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS];
-
 const LOGO = 'https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg';
 
 export default function Header() {
-  const [isScrolled, setIsScrolled]     = useState(false);
+  const [isScrolled, setIsScrolled]         = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { categories = [] } = usePage().props;
+  const mid             = Math.ceil(categories.length / 2);
+  const leftCategories  = categories.slice(0, mid);
+  const rightCategories = categories.slice(mid);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20);
@@ -39,8 +30,9 @@ export default function Header() {
         <div className="container mx-auto hidden lg:grid grid-cols-[1fr_auto_1fr] items-center px-6">
 
           <nav className="flex items-center justify-end gap-5 xl:gap-8 text-white">
-            {LEFT_LINKS.map((l) => (
-              <NavLink key={l.href} href={l.href}>{l.label}</NavLink>
+            <NavLink href="/nosotros">NOSOTROS</NavLink>
+            {leftCategories.map((c) => (
+              <NavLink key={c.id} href={`/products/${c.slug}`}>{c.name.toUpperCase()}</NavLink>
             ))}
           </nav>
 
@@ -55,22 +47,25 @@ export default function Header() {
           </div>
 
           <nav className="flex items-center justify-start gap-5 xl:gap-8 text-white">
-            {RIGHT_LINKS.map((l) => (
-              <NavLink key={l.href} href={l.href}>{l.label}</NavLink>
+            {rightCategories.map((c) => (
+              <NavLink key={c.id} href={`/products/${c.slug}`}>{c.name.toUpperCase()}</NavLink>
             ))}
+            <NavLink href="/concesionarios">CONCESIONARIOS</NavLink>
           </nav>
         </div>
 
-        {/* ── TABLET (md–lg): logo izq | links centro | hamburguesa ── */}
+        {/* ── TABLET (md–lg): logo izq | links centro ── */}
         <div className="container mx-auto hidden md:flex lg:hidden items-center justify-between px-6 gap-4">
           <Link href="/" className="shrink-0">
             <img src={LOGO} alt="Fabros Bolivia" className="h-12 w-32 object-contain" />
           </Link>
 
           <nav className="flex items-center gap-4 text-white text-xs font-bold tracking-widest flex-wrap justify-center">
-            {ALL_LINKS.map((l) => (
-              <NavLink key={l.href} href={l.href}>{l.label}</NavLink>
+            <NavLink href="/nosotros">NOSOTROS</NavLink>
+            {categories.map((c) => (
+              <NavLink key={c.id} href={`/products/${c.slug}`}>{c.name.toUpperCase()}</NavLink>
             ))}
+            <NavLink href="/concesionarios">CONCESIONARIOS</NavLink>
           </nav>
         </div>
 
@@ -100,16 +95,30 @@ export default function Header() {
         {/* ── MENÚ DESPLEGABLE MÓVIL ── */}
         <div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-screen border-t border-brandLight/30' : 'max-h-0'}`}>
           <nav className="container mx-auto px-4 py-3 flex flex-col">
-            {ALL_LINKS.map((l) => (
+            <Link
+              href="/nosotros"
+              className="text-white hover:text-brandLight hover:bg-white/5 font-bold tracking-widest text-sm transition-all py-3 px-2 text-center border-b border-brandLight/20"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              NOSOTROS
+            </Link>
+            {categories.map((c) => (
               <Link
-                key={l.href}
-                href={l.href}
-                className="text-white hover:text-brandLight hover:bg-white/5 font-bold tracking-widest text-sm transition-all py-3 px-2 text-center border-b border-brandLight/20 last:border-0"
+                key={c.id}
+                href={`/products/${c.slug}`}
+                className="text-white hover:text-brandLight hover:bg-white/5 font-bold tracking-widest text-sm transition-all py-3 px-2 text-center border-b border-brandLight/20"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {l.label}
+                {c.name.toUpperCase()}
               </Link>
             ))}
+            <Link
+              href="/concesionarios"
+              className="text-white hover:text-brandLight hover:bg-white/5 font-bold tracking-widest text-sm transition-all py-3 px-2 text-center border-b border-brandLight/20 last:border-0"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              CONCESIONARIOS
+            </Link>
           </nav>
         </div>
 
