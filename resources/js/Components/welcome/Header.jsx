@@ -102,7 +102,7 @@ export default function Header() {
             >
               NOSOTROS
             </Link>
-            {categories.map((c) => (
+            {[...rest, ...(repuestos ? [repuestos] : [])].map((c) => (
               <Link
                 key={c.id}
                 href={`/products/${c.slug}`}
