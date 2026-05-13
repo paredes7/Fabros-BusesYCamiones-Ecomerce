@@ -10,9 +10,11 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const { categories = [] } = usePage().props;
-  const mid             = Math.ceil(categories.length / 2);
-  const leftCategories  = categories.slice(0, mid);
-  const rightCategories = categories.slice(mid);
+  const repuestos       = categories.find(c => c.slug === 'repuestos');
+  const rest            = categories.filter(c => c.slug !== 'repuestos');
+  const mid             = Math.ceil(rest.length / 2);
+  const leftCategories  = rest.slice(0, mid);
+  const rightCategories = [...rest.slice(mid), ...(repuestos ? [repuestos] : [])];
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20);
@@ -50,7 +52,6 @@ export default function Header() {
             {rightCategories.map((c) => (
               <NavLink key={c.id} href={`/products/${c.slug}`}>{c.name.toUpperCase()}</NavLink>
             ))}
-            <NavLink href="/concesionarios">CONCESIONARIOS</NavLink>
           </nav>
         </div>
 
@@ -65,7 +66,6 @@ export default function Header() {
             {categories.map((c) => (
               <NavLink key={c.id} href={`/products/${c.slug}`}>{c.name.toUpperCase()}</NavLink>
             ))}
-            <NavLink href="/concesionarios">CONCESIONARIOS</NavLink>
           </nav>
         </div>
 
@@ -112,13 +112,6 @@ export default function Header() {
                 {c.name.toUpperCase()}
               </Link>
             ))}
-            <Link
-              href="/concesionarios"
-              className="text-white hover:text-brandLight hover:bg-white/5 font-bold tracking-widest text-sm transition-all py-3 px-2 text-center border-b border-brandLight/20 last:border-0"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              CONCESIONARIOS
-            </Link>
           </nav>
         </div>
 

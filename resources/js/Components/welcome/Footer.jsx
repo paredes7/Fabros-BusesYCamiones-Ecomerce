@@ -67,12 +67,8 @@ export default function Footer() {
 
               {/* Descripción */}
               <p className="text-brandLight text-lg leading-relaxed max-w-xl">
-                <span className="font-bold text-white">FABROS</span> es representante oficial en Bolivia de{' '}
-                <span className="font-bold text-white">DongFeng Motors</span> y sus marcas{' '}
-                <span className="font-bold text-white">ZNA</span> y{' '}
-                <span className="font-bold text-white">Yutong Buses</span>.{' '}
-                Con más de 15 años de experiencia, nuestro equipo de asesores está listo para
-                acompañarte en la adquisición de tu vehículo ideal en todo Bolivia.
+                Con más de dieciocho años de experiencia en el sector automotriz, la empresa se ha consolidado
+                como un referente nacional, ofreciendo soluciones de movilidad confiables, innovadoras y de alta calidad.
               </p>
 
               {/* Sitio hermano */}

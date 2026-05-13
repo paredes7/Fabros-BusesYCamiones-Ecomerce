@@ -6,7 +6,7 @@ const BRAND_LIGHT = '#9ab7ca';
 const BRAND_PALE  = '#f0f6ff';
 
 const STATS = [
-  { value: "30+",    label: "Años de experiencia" },
+  { value: "18+",    label: "Años de experiencia" },
   { value: "5.000+", label: "Clientes satisfechos" },
   { value: "10+",    label: "Marcas representadas" },
   { value: "9",      label: "Departamentos de Bolivia" },
@@ -35,7 +35,7 @@ const VALUES = [
   },
 ];
 
-const BRANDS = ["DongFeng Motors", "Yutong Buses", "ZNA", "Repuestos Originales"];
+const BRANDS = ["Cummins", "ZF", "Yuchai", "Weichai"];
 
 const SERVICES = [
   { title: "Venta de vehículos",   desc: "Buses, camiones, SUV y vehículos de carga para uso comercial e industrial.", icon: <Truck size={28} /> },
@@ -58,16 +58,16 @@ export default function Nosotros() {
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24 lg:py-36 text-center text-white">
           <span className="inline-block px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-5 border border-white/20" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
-            Desde 1990 en Bolivia
+            Desde 2008 en Bolivia
           </span>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-tight mb-5">
             Moviendo Bolivia<br />
             <span style={{ color: BRAND_LIGHT }}>con fuerza y confianza</span>
           </h1>
           <p className="text-base sm:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed">
-            Somos la empresa líder en distribución de vehículos de transporte pesado,
-            buses y repuestos en Bolivia, con más de 30 años de trayectoria respaldando
-            al sector productivo del país.
+            FABROS es el representante oficial en Bolivia de DongFeng Motors y su marca asociada ZNA.
+            Además, lidera la comercialización de buses urbanos de la prestigiosa marca Yutong.
+            Para fortalecer aún más su portafolio, recientemente ha incorporado la distribución de lubricantes Shell.
           </p>
         </div>
 
@@ -104,17 +104,14 @@ export default function Nosotros() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed text-base">
               <p>
-                <strong className="text-gray-900">FABROS</strong> es una empresa boliviana fundada con la misión de proveer al mercado
-                nacional vehículos de transporte de alta calidad, repuestos originales y un servicio técnico de excelencia.
+                <strong className="text-gray-900">FABROS</strong>, líderes en la provisión y comercialización de vehículos
+                para transporte de pasajeros y de carga, un referente de calidad y confiabilidad en la industria
+                del transporte. Nos enorgullece ofrecer una amplia gama de productos diseñados y producidos bajo
+                los más altos estándares internacionales.
               </p>
               <p>
-                Representamos a las marcas más reconocidas del sector: <strong className="text-gray-900">DongFeng Motors</strong>,
-                <strong className="text-gray-900"> Yutong Buses</strong> y <strong className="text-gray-900">ZNA</strong>,
-                ofreciendo soluciones integrales para el transporte urbano, interurbano y de carga.
-              </p>
-              <p>
-                Nuestra red de concesionarios y talleres autorizados a nivel nacional garantiza que cada
-                cliente reciba el respaldo que necesita, donde lo necesite.
+                Con más de dieciocho años de experiencia en el sector automotriz, la empresa se ha consolidado
+                como un referente nacional, ofreciendo soluciones de movilidad confiables, innovadoras y de alta calidad.
               </p>
             </div>
           </div>
@@ -128,7 +125,7 @@ export default function Nosotros() {
               />
             </div>
             <div className="absolute bottom-0 left-4 sm:-bottom-6 sm:-left-6 bg-white rounded-2xl shadow-xl px-5 py-4 border border-gray-100">
-              <p className="text-3xl sm:text-4xl font-black" style={{ color: BRAND_BLUE }}>+30</p>
+              <p className="text-3xl sm:text-4xl font-black" style={{ color: BRAND_BLUE }}>+18</p>
               <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mt-0.5">años en el mercado</p>
             </div>
           </div>
@@ -149,8 +146,10 @@ export default function Nosotros() {
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-4">Nuestra Misión</h3>
               <p className="text-gray-600 leading-relaxed text-base">
-                Proveer al mercado boliviano vehículos de transporte, repuestos y servicios de la más
-                alta calidad, contribuyendo al desarrollo del sector productivo y al bienestar de la sociedad boliviana.
+                Nuestra misión es garantizar la máxima durabilidad y rendimiento de los vehículos de pasajeros
+                y de carga, ofreciendo productos de alta calidad, soluciones adaptadas a las necesidades del mercado
+                boliviano. A través de la innovación continua y la mejora de nuestros procesos, buscamos ser un pilar
+                fundamental para el sector del transporte, impulsando su crecimiento y sostenibilidad.
               </p>
             </div>
             <div className="rounded-2xl p-6 sm:p-9 shadow-sm" style={{ backgroundColor: '#f8fafc', border: `2px solid ${BRAND_LIGHT}` }}>
@@ -159,9 +158,9 @@ export default function Nosotros() {
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-4">Nuestra Visión</h3>
               <p className="text-gray-600 leading-relaxed text-base">
-                Ser la empresa de referencia en el sector de transporte pesado en Bolivia y Sudamérica,
-                reconocida por la excelencia en su servicio, la calidad de sus productos y su compromiso
-                con la innovación y la sostenibilidad.
+                Ser la empresa líder en Bolivia, reconocida por nuestra innovación, confiabilidad y compromiso
+                con la excelencia. Ser el socio estratégico, contribuyendo al desarrollo de una industria de
+                transporte más segura y eficiente.
               </p>
             </div>
           </div>
