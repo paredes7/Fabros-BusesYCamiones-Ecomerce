@@ -81,12 +81,12 @@ export default function Footer() {
                 <div>
                   <p className="text-xs text-white/50 font-medium uppercase tracking-wider">Visita también</p>
                   <a
-                    href="https://www.busesycamiones.com"
+                    href="https://fabros.com.bo"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white font-bold text-sm hover:text-brandLight transition-colors"
                   >
-                    www.busesycamiones.com
+                    fabros.com.bo
                   </a>
                 </div>
               </div>

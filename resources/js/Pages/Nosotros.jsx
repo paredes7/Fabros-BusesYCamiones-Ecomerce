@@ -217,7 +217,7 @@ export default function Nosotros() {
       <section className="py-14 sm:py-20" style={{ backgroundColor: BRAND_BLUE }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-white/50 mb-3 block">Nuestras marcas</span>
-          <h2 className="text-2xl sm:text-3xl font-black text-white mb-8 sm:mb-10">Representamos a los mejores</h2>
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-8 sm:mb-10">Trabajamos con los mejores</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {BRANDS.map((b) => (
               <div key={b} className="rounded-xl px-4 py-6 text-white font-bold text-sm border border-white/20 hover:bg-white/20 transition-colors"
